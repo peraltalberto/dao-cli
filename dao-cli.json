@@ -1,0 +1,1 @@
+{"hosts":{"INCIDENCIAS":{"database":"incidencias"}},"templates":{"ts":{"interface":"export interface [name] { [fields] }","param":"[name]:[type];","ext":".ts"}}}

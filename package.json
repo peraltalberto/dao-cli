@@ -1,0 +1,26 @@
+{
+  "name": "dao-cli",
+  "version": "1.0.2",
+  "description": "tools create dao objects",
+  "main": "index.js",
+  "bin": {
+    "dao": "./bin/dao"
+  },
+  "preferGlobal": true,
+  "dependencies": {
+    "fs-extra": "^4.0.2",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "dao",
+    "database",
+    "objects\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D"
+  ],
+  "author": "aperalta",
+  "license": "MIT"
+}
