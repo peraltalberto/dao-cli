@@ -34,7 +34,7 @@ var dao = {
     templates: {
         ts: {
             interface: "export interface [name] { [fields] }",
-            param: "[name]:[type];",
+            param: "public [name]:[type];",
             ext: ".ts"
         }
     }

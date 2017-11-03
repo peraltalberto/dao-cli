@@ -1,1 +1,17 @@
-{"hosts":{"INCIDENCIAS":{"database":"incidencias"}},"templates":{"ts":{"interface":"export interface [name] { [fields] }","param":"[name]:[type];","ext":".ts"}}}
+{
+    "hosts": {
+        "INCIDENCIAS": {
+            "database": "mydb",
+            "host":"localhost",
+            "user":"root",
+            "password":"1234"
+        }
+    },
+    "templates": {
+        "ts": {
+            "interface": "export interface [name] { [fields] }",
+            "param": "[name]:[type];",
+            "ext": ".ts"
+        }
+    }
+}
