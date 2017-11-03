@@ -47,33 +47,30 @@ function casting(type) {
 
 var command = {
     help: () => {
-        console.log("mysql [options] conf_name table ")
+        console.log("./> dao mysql [d path <ruta del fichero>][n name <nombre del objeto>][t template <template>] <conexion> <nombre de la tabla>")
     },
     nparam: 2,
     options: {
-        alias: { 't': "template", 'n': 'name' },
+        alias: { 't': "template", 'd': 'path', 'n': 'name' },
         "template": "ts",
-        "name": "file nombre"
+        "path": "path file",
+        "name": "name to object"
     },
     action: (options, params) => {
-        if (fs.existsSync(dao.path())) {
-            dao.conf(JSON.parse(fs.readFileSync(dao.path())));
-        } else {
-            fs.writeFileSync(dao.path(), JSON.stringify(dao.conf()));
-        }
+
         let connexion = mysql.createConnection(dao.conf().hosts[params[0]]);
         connexion.connect();
         connexion.query("SELECT COLUMN_NAME, DATA_TYPE, IS_NULLABLE, COLUMN_DEFAULT FROM INFORMATION_SCHEMA.COLUMNS WHERE table_name = ?",
             params[1],
             (err, results, fields) => {
-               
-                if (err) { 
+
+                if (err) {
                     console.log("Upps no se a podido conectar con la BBDD");
                     console.log(err.sqlMessage);
                 } else {
                     var template = dao.conf().templates[options.template ? options.template : 'ts'];
                     var file_text = template.interface;
-                    file_text = file_text.replace('[name]', params[1]);
+                    file_text = file_text.replace('[name]', options.name ? options.name : params[1]);
                     fields = '';
                     field_text = template.param;
 
@@ -85,8 +82,11 @@ var command = {
                     // console.log(fields);
                     file_text = file_text.replace('[fields]', fields);
 
-                    var dir = options.name ? options.name : params[1] + template.ext;
-                    console.log(dir, path.dirname(dir));
+                    var dir = (options.path ?
+                        (fs.existsSync('src') ? 'src/' : '') + options.path + (options.name ? options.name : params[1]) + template.ext
+                        :
+                        (options.name ? options.name : params[1]) + template.ext);
+                    console.log('Create: ',path.dirname(dir), (options.name ? options.name : params[1]) + template.ext);
                     if (!fs.existsSync(path.dirname(dir))) {
                         fs.mkdirpSync(path.dirname(dir));
                     }

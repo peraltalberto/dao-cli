@@ -15,12 +15,12 @@
 
 una vez instalado tenemos de momento dos comandos.
 
-#### > INSTALL 
+#### > config 
  
- El comando `install` crea el fichero dao-cli.json con las configuraciones tanto de plantillas de creacion de ficheros, como de conexiones a bases de datos. 
+ El comando `config` crea el fichero dao-cli.json con las configuraciones tanto de plantillas de creacion de ficheros, como de conexiones a bases de datos. 
  
  >    Sintaxis de comando:
- `dao install [db database <nombre db>] [p password <pass>] [u user <usuario>] [host <host db>] <Nombre>`
+ `dao config [l list][ [db database <nombre db>] [p password <pass>] [u user <usuario>] [host <host db>]  <Nombre>]`
  
  
 El fichero resultante dao-cil.json: 
@@ -48,7 +48,7 @@ El fichero resultante dao-cil.json:
  El comando `mysql` es el encargado de generar el fichero dao.
  
  >    Sintaxis de comando:
- `dao mysql [n name <ruta y nombre del fichero destino>][t template <template>] <conexion> <nombre de la tabla>`
+ `dao mysql [d path <ruta del fichero>][n name <nombre del objeto>][t template <template>] <conexion> <nombre de la tabla>`
  
  Fichero resultante:
  `dao mysql MYDB my_table`

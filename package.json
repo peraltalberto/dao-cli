@@ -1,6 +1,6 @@
 {
   "name": "dao-cli",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "reate your database objects (dao) for mysql, sqlserver ..., in languages ​​like ts, js ... with nodejs",
   "main": "index.js",
   "bin": {
@@ -17,7 +17,10 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "start": "node bin/dao",
+    "help": "node bin/dao help",
+    "mysql": "node bin/dao mysql",
+    "config": "node bin/dao config",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -30,6 +33,6 @@
     "cli",
     "database tools"
   ],
-  "author": "aperalta",
+  "author": "peraltalberto",
   "license": "MIT"
 }
