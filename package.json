@@ -1,12 +1,16 @@
 {
   "name": "dao-cli",
-  "version": "1.0.2",
-  "description": "tools create dao objects",
+  "version": "1.0.3",
+  "description": "reate your database objects (dao) for mysql, sqlserver ..., in languages ​​like ts, js ... with nodejs",
   "main": "index.js",
   "bin": {
     "dao": "./bin/dao"
   },
   "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peraltalberto/dao-cli.git"
+  },
   "dependencies": {
     "fs-extra": "^4.0.2",
     "mysql": "^2.15.0"
@@ -18,8 +22,13 @@
   },
   "keywords": [
     "dao",
+    "mysql database objects",
+    "typescript dao",
+    "ts dao",
     "database",
-    "objects\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D"
+    "database objects",
+    "cli",
+    "database tools"
   ],
   "author": "aperalta",
   "license": "MIT"
