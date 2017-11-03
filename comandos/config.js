@@ -3,7 +3,8 @@ var fs = require('fs');
 var dao = require('../dao');
 var command = {
     help: () => {
-        console.log("./> dao config [l list][ [db database <nombre db>] [p password <pass>] [u user <usuario>] [host <host db>]  <Nombre>]");
+        console.log("./> dao config [l list][[uri <uri string connect>][ [db database <nombre db>] [p password <pass>] [u user <usuario>] [host <host db>][port <port db>] ] <Nombre>]");
+        console.log("\n\n uri only pg command");
     },
     nparam: 1,
     options: {
@@ -13,6 +14,7 @@ var command = {
         "database": "Nombre de la base de datos",
         "password": "contraseña",
         "user": "usuario",
+        "uri":"Sting uri connect",
         "list": () => {
             console.log(dao.conf().hosts);
         },

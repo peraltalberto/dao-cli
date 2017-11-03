@@ -1,9 +1,19 @@
 
+var fs = require('fs-extra');
+var path = require('path');
+var ruta = '';
+var local = process.argv[2] === '-l';
 
-var fs = require('fs');
+if (!local ) {
+  var dir = path.dirname(process.argv[1]).split(path.sep);
+  for (var i = 0; i < dir.length - 1; i++) {
+    ruta = ruta + dir[i] + path.sep;
+  }
+  console.log(ruta);
+}
 
-var command = process.argv.slice(2)[0];
-var options = process.argv.slice(3);
+var command = '';
+var options = '';
 
 var defaultConf = {
   hosts: {
@@ -23,12 +33,12 @@ dao tools
  */
 
 function executeCommand() {
-  
+
   if (command === 'help') {
     console.log('Dao - cli is a command-line tool for quickly generating interfaces or classes with objects from a database.');
-    console.log('\n\n','           Commands ');
-    console.log(       '-_-**************************---');
-    Object.keys(dao.programs).forEach(e=>{
+    console.log('\n\n', '           Commands ');
+    console.log('-_-**************************---');
+    Object.keys(dao.programs).forEach(e => {
       dao.programs[e].help();
       console.log('\n');
     });
@@ -56,7 +66,7 @@ function executeCommand() {
   }
 }
 var dao = {
-  path: 'dao-cli.json',
+  path: ruta+'dao-cli.json',
   config: undefined,
   programs: {}
 };
@@ -66,8 +76,8 @@ module.exports = {
     dao.programs[name] = program;
   },
   exec: function () {
-    command = process.argv.slice(2)[0];
-    options = process.argv.slice(3);
+    command = process.argv.slice(local?3:2)[0];
+    options = process.argv.slice(local?4:3);
     executeCommand();
   },
   path: function () {
