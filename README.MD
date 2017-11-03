@@ -1,5 +1,6 @@
 ![shieldsIO](https://img.shields.io/github/issues/peraltalberto/dao-cli.svg)
 ![shieldsIO](https://img.shields.io/github/release/peraltalberto/dao-cli.svg)
+[![npm](https://img.shields.io/npm/v/dao-cli.svg)](https://www.npmjs.com/package/dao-cli)
 ![shieldsIO](https://img.shields.io/github/license/peraltalberto/dao-cli.svg)
 
 # DAO - CLI
