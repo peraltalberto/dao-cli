@@ -6,44 +6,6 @@ var dao = require('../dao');
 var types_js = ['Number', 'Date', 'Buffer', 'String'];
 
 
-function casting(type) {
-    type = type.toUpperCase();
-    switch (type) {
-        case 'TINYINT':
-        case 'SMALLINT':
-        case 'INT':
-        case 'MEDIUMINT':
-        case 'YEAR':
-        case 'FLOAT':
-        case 'DOUBLE':
-            return types_js[0];
-        case 'TIMESTAMP':
-        case 'DATE':
-        case 'DATETIME':
-            return types_js[1];
-        case 'TINYBLOB':
-        case 'MEDIUMBLOB':
-        case 'LONGBLOB':
-        case 'BLOB':
-        case 'BINARY':
-        case 'VARBINARY':
-        case 'BIT':
-            return types_js[2];
-        case 'CHAR':
-        case 'VARCHAR':
-        case 'TINYTEXT':
-        case 'MEDIUMTEXT':
-        case 'LONGTEXT':
-        case 'TEXT':
-        case 'ENUM':
-        case 'SET':
-        case 'DECIMAL':
-        case 'BIGINT':
-        case 'TIME':
-        case 'GEOMETRY':
-            return types_js[3];
-    }
-}
 
 var command = {
     help: () => {
@@ -69,14 +31,20 @@ var command = {
                     console.log(err.sqlMessage);
                 } else {
                     var template = dao.conf().templates[options.template ? options.template : 'ts'];
+                    var type_maps = dao.conf().type_maps;
                     var file_text = template.interface;
-                    file_text = file_text.replace('[name]', options.name ? options.name : params[1]);
+                    file_text = file_text.replace(new RegExp('#name', 'g') , options.name ? options.name : params[1]);
                     fields = '';
                     field_text = template.param;
 
                     for (let i = 0; i < results.length; i++) {
                         var el = results[i];
-                        fields = fields + '\n' + field_text.replace('[name]', el['COLUMN_NAME']).replace('[type]', casting(el['DATA_TYPE']));
+                        fields = fields + '\n' + field_text
+                        .replace(new RegExp('#name', 'g') , el['COLUMN_NAME'])
+                        .replace(new RegExp('#type', 'g'),type_maps.mysql[el['DATA_TYPE']
+                        .toUpperCase()].ts.type)
+                        .replace(new RegExp('#default', 'g'),type_maps.mysql[el['DATA_TYPE']
+                        .toUpperCase()].ts.default);
 
                     };
                     // console.log(fields);

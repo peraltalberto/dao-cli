@@ -4,7 +4,7 @@ var path = require('path');
 var ruta = '';
 var local = process.argv[2] === '-l';
 
-if (!local ) {
+if (!local) {
   var dir = path.dirname(process.argv[1]).split(path.sep);
   for (var i = 0; i < dir.length - 1; i++) {
     ruta = ruta + dir[i] + path.sep;
@@ -21,9 +21,43 @@ var defaultConf = {
   },
   templates: {
     ts: {
-      interface: "export interface [name] {\n [fields] \n}",
-      param: "\t public [name]:[type];",
+      interface: "export class #name {\n [fields] \n}",
+      param: "\t public #name:#type = #default;",
       ext: ".ts"
+    }
+  },
+
+  type_maps: {
+    mysql: {
+      TINYINT: { ts: { type: "Number", default: 0 } },
+      SMALLINT: { ts: { type: "Number", default: 0 } },
+      INT: { ts: { type: "Number", default: 0 } },
+      MEDIUMINT: { ts: { type: "Number", default: 0 } },
+      YEAR: { ts: { type: "Number", default: 0 } },
+      FLOAT: { ts: { type: "Number", default: 0 } },
+      DOUBLE: { ts: { type: "Number", default: 0 } },
+      TIMESTAMP: { ts: { type: "Date()", default: "''" } },
+      DATE: { ts: { type: "Date()", default: "''" } },
+      DATETIME: { ts: { type: "Date()", default: "''" } },
+      TINYBLOB: { ts: { type: "Buffer", default: undefined } },
+      MEDIUMBLOB: { ts: { type: "Buffer", default: undefined } },
+      LONGBLOB: { ts: { type: "Buffer", default: undefined } },
+      BLOB: { ts: { type: "Buffer", default: undefined } },
+      BINARY: { ts: { type: "Buffer", default: undefined } },
+      VARBINARY: { ts: { type: "Buffer", default: undefined } },
+      BIT: { ts: { type: "Buffer", default: undefined } },
+      CHAR: { ts: { type: "String", default: "''" } },
+      VARCHAR: { ts: { type: "String", default: "''" } },
+      TINYTEXT: { ts: { type: "String", default: "''" } },
+      MEDIUMTEXT: { ts: { type: "String", default: "''" } },
+      LONGTEXT: { ts: { type: "String", default: "''" } },
+      TEXT: { ts: { type: "String", default: "''" } },
+      ENUM: { ts: { type: "String", default: "''" } },
+      SET: { ts: { type: "String", default: "''" } },
+      DECIMAL: { ts: { type: "String", default: "''" } },
+      BIGINT: { ts: { type: "String", default: "''" } },
+      TIME: { ts: { type: "String", default: "''" } },
+      GEOMETRY: { ts: { type: "String", default: "''" } }
     }
   }
 };
@@ -66,7 +100,7 @@ function executeCommand() {
   }
 }
 var dao = {
-  path: ruta+'dao-cli.json',
+  path: ruta + 'dao-cli.json',
   config: undefined,
   programs: {}
 };
@@ -76,8 +110,8 @@ module.exports = {
     dao.programs[name] = program;
   },
   exec: function () {
-    command = process.argv.slice(local?3:2)[0];
-    options = process.argv.slice(local?4:3);
+    command = process.argv.slice(local ? 3 : 2)[0];
+    options = process.argv.slice(local ? 4 : 3);
     executeCommand();
   },
   path: function () {
