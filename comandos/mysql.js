@@ -2,14 +2,13 @@
 var fs = require('fs-extra');
 var path = require('path');
 var mysql = require('mysql');
+var util = require('../lib/util');
 var dao = require('../dao');
 var types_js = ['Number', 'Date', 'Buffer', 'String'];
 
-
-
 var command = {
     help: () => {
-        console.log("./> dao mysql [d path <ruta del fichero>][n name <nombre del objeto>][t template <template>] <conexion> <nombre de la tabla>")
+        console.log(`./> dao mysql [d path <ruta del fichero>][n name <nombre del objeto>][t template <template>] <conexion> <nombre de la tabla>`)
     },
     nparam: 2,
     options: {
@@ -33,19 +32,24 @@ var command = {
                     var template = dao.conf().templates[options.template ? options.template : 'ts'];
                     var type_maps = dao.conf().type_maps;
                     var file_text = template.interface;
-                    file_text = file_text.replace(new RegExp('#name', 'g') , options.name ? options.name : params[1]);
+                    file_text = file_text
+                    .replace(new RegExp('#name#', 'g') , options.name ? options.name : params[1])
+                    .replace(new RegExp('#nameU#', 'g') , util.normalizeNameU(options.name ? options.name : params[1]))
+                    .replace(new RegExp('#nameL#', 'g') , util.normalizeNameL(options.name ? options.name : params[1]));
                     fields = '';
+                    console.log(file_text);
                     field_text = template.param;
 
                     for (let i = 0; i < results.length; i++) {
                         var el = results[i];
                         fields = fields + '\n' + field_text
-                        .replace(new RegExp('#name', 'g') , el['COLUMN_NAME'])
-                        .replace(new RegExp('#type', 'g'),type_maps.mysql[el['DATA_TYPE']
+                        .replace(new RegExp('#name#', 'g') , el['COLUMN_NAME'])
+                        .replace(new RegExp('#nameU#', 'g') ,util.normalizeNameU( el['COLUMN_NAME']))
+                        .replace(new RegExp('#nameL#', 'g') ,util.normalizeNameL( el['COLUMN_NAME']))
+                        .replace(new RegExp('#type#', 'g'),type_maps.mysql[el['DATA_TYPE']
                         .toUpperCase()].ts.type)
-                        .replace(new RegExp('#default', 'g'),type_maps.mysql[el['DATA_TYPE']
+                        .replace(new RegExp('#default#', 'g'),type_maps.mysql[el['DATA_TYPE']
                         .toUpperCase()].ts.default);
-
                     };
                     // console.log(fields);
                     file_text = file_text.replace('[fields]', fields);

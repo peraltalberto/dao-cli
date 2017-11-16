@@ -21,8 +21,8 @@ var defaultConf = {
   },
   templates: {
     ts: {
-      interface: "export class #name {\n [fields] \n}",
-      param: "\t public #name:#type = #default;",
+      interface: "export class #name# {\n [fields] \n}",
+      param: "\t public #name#:#type# = #default#;",
       ext: ".ts"
     }
   },
